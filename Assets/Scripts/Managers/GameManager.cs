@@ -159,7 +159,7 @@ public class GameManager : Singleton<GameManager>
 
     public void EnableDoubleRoll()
     {
-        _playersIgnoreWalls[_currentPlayerIndex] = true;
+        _playersDoubleRoll[_currentPlayerIndex] = true;
         Debug.Log("Enabled double roll for player: " + _currentPlayerIndex);
     }
 

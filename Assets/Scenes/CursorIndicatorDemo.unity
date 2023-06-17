@@ -293,6 +293,12 @@ MonoBehaviour:
       m_Calls: []
   keySpawnPoint:
   - {x: 1, y: -2}
+  - {x: 1, y: -1}
+  - {x: 1, y: 2}
+  - {x: -4, y: 2}
+  - {x: 4, y: -2}
+  - {x: 5, y: 4}
+  - {x: 4, y: -4}
   key: {fileID: 1031070180}
 --- !u!4 &207055613
 Transform:
@@ -568,6 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2afad8a309f150547bf312853897c22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dontDestroy: 1
 --- !u!1 &525152554
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,7 +954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1037,6 +1043,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3294877043775218205, guid: 07bcfebd32c3e6b4c8865ac7abf2c8bb, type: 3}
@@ -1092,12 +1099,14 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 07bcfebd32c3e6b4c8865ac7abf2c8bb, type: 3}
 --- !u!1001 &1385638752
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1631644774931741050, guid: cd6ef439d3e6e4c4ba14d72d3ed21081, type: 3}
@@ -1106,11 +1115,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1631644774931741050, guid: cd6ef439d3e6e4c4ba14d72d3ed21081, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 4.03
       objectReference: {fileID: 0}
     - target: {fileID: 1631644774931741050, guid: cd6ef439d3e6e4c4ba14d72d3ed21081, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.16
       objectReference: {fileID: 0}
     - target: {fileID: 1631644774931741050, guid: cd6ef439d3e6e4c4ba14d72d3ed21081, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1153,6 +1162,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: cd6ef439d3e6e4c4ba14d72d3ed21081, type: 3}
 --- !u!1 &1486781704
 GameObject:
@@ -1472,6 +1482,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnNewTurnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnContinueMove:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1751044416
@@ -2189,6 +2202,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

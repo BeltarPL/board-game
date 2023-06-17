@@ -5,7 +5,7 @@ public class Event : IEvent
 
     public void ChooseEvent()
     {
-        int _randomValue = Random.Range(1, 7);
+        int _randomValue = 3; //Random.Range(1, 7);
 
         switch (_randomValue)
         {
