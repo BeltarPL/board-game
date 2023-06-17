@@ -16,15 +16,12 @@ public class MouseBehaviour : MonoBehaviour
 
     [SerializeField]
     List<Vector3> _fieldsCurrentlySelected = new List<Vector3>();
-    List<Vector3> _reversedPath = new List<Vector3>();
 
     public List<Vector3> FieldsCurrentlySelected => _fieldsCurrentlySelected;
 
-    public List<Vector3> FieldsCurrentlySelectedReversed => _reversedPath;
-
     bool _isCursorActive = false;
 
-    int _maxCellsThisTurn = 6;
+    public int MaxCellsDoneThisTurn { get; private set; } = 6;
 
     bool _canTraverseWalls = false;
 
@@ -64,7 +61,7 @@ public class MouseBehaviour : MonoBehaviour
         else if(Input.GetMouseButton(0))
         {
             if (_lastPositionCalculated == clampedWorldPos) return;
-            if (_objectPool.IsAtMax() || _objectPool.CurrentObjectCount == _maxCellsThisTurn) return;
+            if (_objectPool.IsAtMax() || _objectPool.CurrentObjectCount == MaxCellsDoneThisTurn) return;
             if (_fieldsCurrentlySelected.Contains(clampedWorldPos)) return;
 
             if (_objectPool.CurrentObjectCount == 0 && !((Vector2)_startPos).IsVectorNeighbour(clampedWorldPos)) return;
@@ -94,12 +91,18 @@ public class MouseBehaviour : MonoBehaviour
             GameObject go = _objectPool.Instantiate(clampedWorldPos);
             _lastPositionCalculated = go.transform.position;
             _fieldsCurrentlySelected.Add(clampedWorldPos);
-            _reversedPath.Add(clampedWorldPos);
             go.GetComponent<CursorTile>().SetNumber(_fieldsCurrentlySelected.Count);
         }
         else if(Input.GetMouseButtonUp(0))
         {
-            _reversedPath.Reverse();
+            if(_fieldsCurrentlySelected.Count == MaxCellsDoneThisTurn)
+            {
+
+            }
+            else
+            {
+
+            }
         }
     }
 
@@ -112,7 +115,7 @@ public class MouseBehaviour : MonoBehaviour
 
     public void SetMaxCellsThisTurn(int count)
     {
-        _maxCellsThisTurn = count;
+        MaxCellsDoneThisTurn = count;
     }
 
     public void SetCanTraverseWalls(bool state)
@@ -125,7 +128,6 @@ public class MouseBehaviour : MonoBehaviour
         _objectPool.DestroyAll();
         _lastPositionCalculated = Vector3.one * float.PositiveInfinity;
         _fieldsCurrentlySelected.Clear();
-        _reversedPath.Clear();
     }
 
     public void SetStartPos(Vector3 startPos)

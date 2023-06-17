@@ -17,8 +17,7 @@ public class KeysManager : Singleton<KeysManager>
     {
         if (keySpawnPoint.Count == 0)
         {
-            Destroy(key);
-            key = null;
+            key.SetActive(false);
             return;
         }
 
@@ -26,5 +25,17 @@ public class KeysManager : Singleton<KeysManager>
         EventsGenerator.SetPositionState((int)keySpawnPoint[randomSpawnPoint].x, (int)keySpawnPoint[randomSpawnPoint].y, true);
         key.transform.SetPositionAndRotation(keySpawnPoint[randomSpawnPoint], Quaternion.identity);
         keySpawnPoint.RemoveAt(randomSpawnPoint);
+    }
+
+    public bool CheckIfPositionReserved(Vector2 position)
+    {
+        if (keySpawnPoint.Contains(position))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

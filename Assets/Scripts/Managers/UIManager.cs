@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnRolledDice.AddListener(ShowRollResult);
         GameManager.Instance.OnActivateRoute.AddListener(() => ShowAcceptMoveUI(false));
         GameManager.Instance.OnNewTurnStart.AddListener(OnNewTurnStart);
+        GameManager.Instance.OnContinueMove.AddListener(() => ShowAcceptMoveUI(true));
         OnNewTurnStart();
         /*GameManager.Instance.OnNewTurnStart.AddListener()*/
     }
