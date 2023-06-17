@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -45,7 +44,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void ChangePlayerTurn()
@@ -69,18 +68,18 @@ public class GameManager : Singleton<GameManager>
         int maxRoll = 6;
         if (_playersMax3Move[_currentPlayerIndex]) maxRoll = 3;
 
-        int rollResult = Random.Range(1, maxRoll+1);
+        int rollResult = Random.Range(1, maxRoll + 1);
         OnRolledDice.Invoke(rollResult);
         _mouseBehaviour.SetMaxCellsThisTurn(rollResult);
         _mouseBehaviour.SetCanTraverseWalls(_playersIgnoreWalls[_currentPlayerIndex]);
         _mouseBehaviour.SetStartPos(PlayerManager.Instance.PlayerControllers[_currentPlayerIndex].transform.position);
         _mouseBehaviour.SetCursorInteraction(true);
-        
+
     }
 
     public void AfterOneTileMoved(Vector3 positionToCheck)
     {
-        if(InteractionManager.Instance.CheckInteractable(positionToCheck))
+        if (InteractionManager.Instance.CheckInteractable(positionToCheck))
         {
 
         }
@@ -90,20 +89,29 @@ public class GameManager : Singleton<GameManager>
     {
         if (PlayerManager.Instance.FieldsDoneThisTurn == _mouseBehaviour.MaxCellsDoneThisTurn)
         {
+            bool shouldChangePlayer = true;
             _mouseBehaviour.SetCursorInteraction(false);
             EventsManager.Instance.CheckIfAnyEventsToInvoke();
-            if (_playersDoubleRoll[_currentPlayerIndex])
+            if (_playersMissTurn[_currentPlayerIndex])
             {
-                _playersDoubleRoll[_currentPlayerIndex] = false;
-                PrepareForTurn(false);
+                shouldChangePlayer = true;
             }
-            else if (_playerBackToStartingPosition[_currentPlayerIndex])
+            else
+            {
+                if (_playersDoubleRoll[_currentPlayerIndex])
+                {
+                    _playersDoubleRoll[_currentPlayerIndex] = false;
+                    shouldChangePlayer = false;
+                }
+            }
+
+            if (shouldChangePlayer)
             {
                 PrepareForTurn(true);
             }
             else
             {
-                PrepareForTurn(true);
+                PrepareForTurn(false);
             }
             PlayerManager.Instance.PrepareCurrentPlayer();
         }
@@ -130,13 +138,6 @@ public class GameManager : Singleton<GameManager>
             ChangePlayerTurn();
         }
 
-        /// Write some code to prepare next turn
-        if (_playersMissTurn[_currentPlayerIndex])
-        {
-            PrepareForTurn(true);
-            return;
-        }
-
         _mouseBehaviour.ClearPath();
 
         OnNewTurnStart.Invoke();
@@ -147,7 +148,7 @@ public class GameManager : Singleton<GameManager>
         PlayerManager.Instance.PlayerControllers[_currentPlayerIndex].pickedKeys++;
         if (PlayerManager.Instance.PlayerControllers[_currentPlayerIndex].pickedKeys == 4)
         {
-            Debug.Log("The winner is Player"+_currentPlayerIndex+1);
+            Debug.Log("The winner is Player" + _currentPlayerIndex + 1);
             OnGameEnded.Invoke(_currentPlayerIndex);
         }
     }
