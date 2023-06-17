@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI _rollText;
+
+    [SerializeField] 
+    public List<Sprite> dices;
+    
+    [SerializeField]
+    public Image diceImage;
 
     [SerializeField]
     GameObject _rollDiceButton;
@@ -38,16 +45,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowRollResult(int result)
     {
-        _rollDiceButton.SetActive(false);
-        _rollText.gameObject.SetActive(true);
-        _rollText.text = result.ToString();
-        _rollText.transform.DOPunchScale(Vector3.one * 1.3f, .3f);
+        diceImage.sprite = dices[result - 1];
         ShowAcceptMoveUI(true);
     }
 
     public void OnNewTurnStart()
     {
-        _rollDiceButton.SetActive(true);
-        _rollText.gameObject.SetActive(false);
+        diceImage.sprite = null;
     }
 }
