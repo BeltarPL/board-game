@@ -17,6 +17,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public UnityEvent OnPathEndedEvent;
 
+    public int FieldsDoneThisTurn => GetCurrentPlayerController().TilesDoneThisTurn;
+
     // Start is called before the first frame update
     void Start()
     {

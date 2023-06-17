@@ -26,6 +26,8 @@ public class GameManager : Singleton<GameManager>
 
     public UnityEvent OnNewTurnStart;
 
+    public UnityEvent OnContinueMove;
+
     UnityEvent[] PendingEventsForPlayers = new UnityEvent[2];
     // Start is called before the first frame update
     void Start()
@@ -58,15 +60,6 @@ public class GameManager : Singleton<GameManager>
         PlayerManager.Instance.SetPathForCurrentPlayer(routeToMove);
         OnActivateRoute.Invoke();
     }
-    
-    public void MoveActivePlayerOnRouteBackwards()
-    {
-        List<Vector3> routeToMove = _mouseBehaviour.FieldsCurrentlySelectedReversed;
-        if (routeToMove.Count == 0) return;
-
-        PlayerManager.Instance.SetPathForCurrentPlayer(routeToMove);
-        OnActivateRoute.Invoke();
-    }
 
     public void RollDice()
     {
@@ -92,23 +85,35 @@ public class GameManager : Singleton<GameManager>
 
     public void AfterPlayerPathEnded()
     {
-        _mouseBehaviour.SetCursorInteraction(false);
-        EventsManager.Instance.CheckIfAnyEventsToInvoke();
-        if (_playersDoubleRoll[_currentPlayerIndex])
+        if (PlayerManager.Instance.FieldsDoneThisTurn == _mouseBehaviour.MaxCellsDoneThisTurn)
         {
-            _playersDoubleRoll[_currentPlayerIndex] = false;
-            PrepareForTurn(false);
-        }
-        else if(_playerBackToStartingPosition[_currentPlayerIndex])
-        {
-            MoveActivePlayerOnRouteBackwards();
-            PrepareForTurn(true);
+            Debug.LogError("Here!");
+            _mouseBehaviour.SetCursorInteraction(false);
+            EventsManager.Instance.CheckIfAnyEventsToInvoke();
+            if (_playersDoubleRoll[_currentPlayerIndex])
+            {
+                _playersDoubleRoll[_currentPlayerIndex] = false;
+                PrepareForTurn(false);
+            }
+            else if (_playerBackToStartingPosition[_currentPlayerIndex])
+            {
+                PrepareForTurn(true);
+            }
+            else
+            {
+                PrepareForTurn(true);
+            }
+            PlayerManager.Instance.PrepareCurrentPlayer();
         }
         else
         {
-            PrepareForTurn(true);
+            Debug.LogError("tHere!");
+            _mouseBehaviour.SetCursorInteraction(true);
+            _mouseBehaviour.SetMaxCellsThisTurn(_mouseBehaviour.MaxCellsDoneThisTurn - PlayerManager.Instance.FieldsDoneThisTurn);
+            _mouseBehaviour.ClearPath();
+            _mouseBehaviour.SetStartPos(PlayerManager.Instance.PlayerControllers[_currentPlayerIndex].transform.position);
+            OnContinueMove.Invoke();
         }
-        PlayerManager.Instance.PrepareCurrentPlayer();
     }
 
     public void PrepareForTurn(bool ShouldChangePlayer)

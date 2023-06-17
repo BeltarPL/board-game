@@ -27,7 +27,7 @@ public class EventsGenerator : MonoBehaviour
             int _tempPositionX = Random.Range(startingX, startingX + 5);
             int _tempPositionY = Random.Range(startingY, startingY + 5);
 
-            if(_mapFields[_tempPositionX, _tempPositionY] == true)
+            if (KeysManager.Instance.CheckIfPositionReserved(new Vector2(_tempPositionX, _tempPositionY)) || _mapFields[_tempPositionX, _tempPositionY] == true)
             {
                 _tempCount++;
             }
@@ -73,11 +73,12 @@ public class EventsGenerator : MonoBehaviour
 
     IEnumerator MapInit()
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
         PlaceEventsForQuarter(0, 0);
         PlaceEventsForQuarter(5, 0);
         PlaceEventsForQuarter(0, 5);
         PlaceEventsForQuarter(5, 5);
+        yield return null;
     }
 }

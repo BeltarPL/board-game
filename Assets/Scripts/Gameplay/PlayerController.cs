@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnOneTileMoved;
 
     public UnityEvent OnPathEndedEvent;
+
+    public int TilesDoneThisTurn { get; private set; } = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveOnPath(List<Vector3> path)
     {
+        TilesDoneThisTurn = path.Count;
         StartCoroutine(MoveOnPathAnimated(path));
     }
 
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
     }
     public void LookForKey()
     {
-        if (KeysManager.Instance.key.transform.position == transform.position)
+        if (KeysManager.Instance.key != null && KeysManager.Instance.key.transform.position == transform.position)
         {
             Debug.Log("Player stepped on KEY!");
             KeysManager.Instance.OnKeyPicked?.Invoke();
