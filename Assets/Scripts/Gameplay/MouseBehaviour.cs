@@ -63,15 +63,15 @@ public class MouseBehaviour : MonoBehaviour
             if (_lastPositionCalculated == clampedWorldPos) return;
             if (_objectPool.IsAtMax() || _objectPool.CurrentObjectCount == MaxCellsDoneThisTurn) return;
             if (_fieldsCurrentlySelected.Contains(clampedWorldPos)) return;
-
             if (_objectPool.CurrentObjectCount == 0 && !((Vector2)_startPos).IsVectorNeighbour(clampedWorldPos)) return;
 
             if (_fieldsCurrentlySelected.Count != 0)
             {
                 Vector3 lastAddedPos = _fieldsCurrentlySelected.GetLastItem();
                 if(lastAddedPos.x != clampedWorldPos.x && lastAddedPos.y != clampedWorldPos.y) return;
+                if (!((Vector2)clampedWorldPos).IsVectorNeighbour(_fieldsCurrentlySelected.GetLastItem())) return;
 
-                if(!_canTraverseWalls)
+                if (!_canTraverseWalls)
                 {
                     Vector3 direction = clampedWorldPos - lastAddedPos;
                     RaycastHit2D hitResult = Physics2D.Raycast(_fieldsCurrentlySelected.GetLastItem(), direction, 1f);
