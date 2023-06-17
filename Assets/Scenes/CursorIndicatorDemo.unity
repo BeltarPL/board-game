@@ -1487,6 +1487,9 @@ MonoBehaviour:
   OnContinueMove:
     m_PersistentCalls:
       m_Calls: []
+  OnGameEnded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1751044416
 Transform:
   m_ObjectHideFlags: 0

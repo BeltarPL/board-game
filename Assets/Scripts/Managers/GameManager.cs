@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -185,5 +186,10 @@ public class GameManager : Singleton<GameManager>
     {
         _playersMax3Move[_currentPlayerIndex == 0 ? 1 : 0] = true;
         Debug.Log("Enabled max 3 tile movement for player: " + (_currentPlayerIndex == 0 ? 1 : 0));
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }
