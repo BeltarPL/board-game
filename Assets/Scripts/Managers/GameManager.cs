@@ -28,6 +28,8 @@ public class GameManager : Singleton<GameManager>
 
     public UnityEvent OnContinueMove;
 
+    public UnityEvent<int> OnGameEnded;
+
     UnityEvent[] PendingEventsForPlayers = new UnityEvent[2];
     // Start is called before the first frame update
     void Start()
@@ -145,6 +147,7 @@ public class GameManager : Singleton<GameManager>
         if (PlayerManager.Instance.PlayerControllers[_currentPlayerIndex].pickedKeys == 4)
         {
             Debug.Log("The winner is Player"+_currentPlayerIndex+1);
+            OnGameEnded.Invoke(_currentPlayerIndex);
         }
     }
 
