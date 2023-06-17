@@ -10,14 +10,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject _acceptMoveUI;
 
-    [SerializeField]
-    TextMeshProUGUI _rollText;
-
     [SerializeField] 
     public List<Sprite> dices;
     
     [SerializeField]
     public Image diceImage;
+
+    [SerializeField] 
+    public TMP_Text resultText;
 
     [SerializeField]
     GameObject _rollDiceButton;
@@ -30,6 +30,17 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnContinueMove.AddListener(() => ShowAcceptMoveUI(true));
         OnNewTurnStart();
         /*GameManager.Instance.OnNewTurnStart.AddListener()*/
+        GameManager.Instance.OnGameEnded.AddListener(ShowResult);
+    }
+
+    private void ShowResult(int index)
+    {
+        resultText.gameObject.SetActive(true);
+        resultText.text = "The Winner is Player " + (index + 1);
+    }
+    private void DebugWin()
+    {
+        ShowResult(1);
     }
 
     // Update is called once per frame
