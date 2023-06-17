@@ -87,7 +87,6 @@ public class GameManager : Singleton<GameManager>
     {
         if (PlayerManager.Instance.FieldsDoneThisTurn == _mouseBehaviour.MaxCellsDoneThisTurn)
         {
-            Debug.LogError("Here!");
             _mouseBehaviour.SetCursorInteraction(false);
             EventsManager.Instance.CheckIfAnyEventsToInvoke();
             if (_playersDoubleRoll[_currentPlayerIndex])
@@ -107,12 +106,12 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            Debug.LogError("tHere!");
             _mouseBehaviour.SetCursorInteraction(true);
             _mouseBehaviour.SetMaxCellsThisTurn(_mouseBehaviour.MaxCellsDoneThisTurn - PlayerManager.Instance.FieldsDoneThisTurn);
             _mouseBehaviour.ClearPath();
             _mouseBehaviour.SetStartPos(PlayerManager.Instance.PlayerControllers[_currentPlayerIndex].transform.position);
             OnContinueMove.Invoke();
+            PlayerManager.Instance.PrepareCurrentPlayer();
         }
     }
 
